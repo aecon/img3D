@@ -26,9 +26,9 @@ void objects(uint64_t npixel, const int64_t *c, uint64_t nobj, uint64_t *start,
     exit(2);
   }
 
-  Verbose = (getenv("ADV_VERBOSE") != NULL);
+  Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
-    fprintf(stderr, "adv.objects: npixel, nobj: %" PRIu64 ", %" PRIu64 "\n",
+    fprintf(stderr, "img3.objects: npixel, nobj: %" PRIu64 ", %" PRIu64 "\n",
             npixel, nobj);
 
   if ((cum = malloc((nobj + 1) * sizeof *cum)) == NULL) {
@@ -48,7 +48,7 @@ void objects(uint64_t npixel, const int64_t *c, uint64_t nobj, uint64_t *start,
 
   if (Verbose)
     for (i = 0; i < nobj; i++)
-      fprintf(stderr, "adv.objects: count[%ld] = %ld\n", i, count[i]);
+      fprintf(stderr, "img3.objects: count[%ld] = %ld\n", i, count[i]);
 
   start[0] = cum[0] = s = 0;
   for (i = 0; i < nobj; i++) {
@@ -216,10 +216,10 @@ uint64_t remove_small_objects(uint64_t n, int64_t *input, uint64_t min_size,
   int Verbose;
   uint64_t i;
   uint64_t cnt;
-  Verbose = (getenv("ADV_VERBOSE") != NULL);
+  Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
     fprintf(stderr,
-            "adv.remove_small_objects: n, min_size: %" PRIu64 " %" PRIu64 "\n",
+            "img3.remove_small_objects: n, min_size: %" PRIu64 " %" PRIu64 "\n",
             n, min_size);
 
   memset(work, 0, n * sizeof *work);

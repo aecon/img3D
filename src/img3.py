@@ -27,7 +27,7 @@ def mmap_create(path, dtype, shape, order='F'):
 
 
 def nrrd_read(path):
-    me = "adv.py"
+    me = "img3.py"
     D = {"byte skip": 0, "endian": "little"}
     try:
         with open(path, "r") as file:
@@ -180,7 +180,7 @@ def tif2raw(input_path, output_raw, output_nrrd):
 
 def memset(input, value):
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('img3.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.memset0
     fun.restype = None
     fun.argtypes = [
@@ -198,7 +198,7 @@ def convolve(input, mask, output):
     assert input.shape == mask.shape
     assert input.shape == output.shape
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('img3.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.convolve
     fun.restype = None
     fun.argtypes = [
@@ -220,7 +220,7 @@ def labels(input, output, work):
     assert input.shape == output.shape
     assert input.shape == work.shape
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('img3.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.labels
     fun.restype = ctypes.c_ulong
     fun.argtypes = [
@@ -240,7 +240,7 @@ def labels(input, output, work):
 def remove_small_objects(input, min_size, work):
     assert input.size == work.size
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('adv0.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.remove_small_objects
     fun.restype = ctypes.c_ulong
     fun.argtypes = [
@@ -262,7 +262,7 @@ def objects(label, nobj):
     start = numpy.empty(nobj + 1, dtype=dtype)
     work = numpy.empty(npixel, dtype=dtype)
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('adv0.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.objects
     fun.restype = None
     fun.argtypes = [

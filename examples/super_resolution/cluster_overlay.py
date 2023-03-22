@@ -66,6 +66,7 @@ start = time.time()
 parser = argparse.ArgumentParser()
 parser.add_argument('-m', type=str, nargs='+', required=True, help="nrrd, marker img data")
 parser.add_argument('-c', type=str, nargs='+', required=True, help="nrrd, channel img data")
+parser.add_argument('-o', type=str, required=True, help="output directory")
 args = parser.parse_args()
 
 
@@ -90,19 +91,15 @@ for fm,fc in zip(args.m, args.c):
     # CREATE WORK ARRAYS
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     stamp("create working arrays")
-    odir = "%s/../Analysis" % (os.path.dirname(fm))
-    print(odir)
+    odir = args.o
     if not os.path.exists(odir):
         os.makedirs(odir)
-    if not os.path.exists("%s/work" % odir):
-        os.makedirs("%s/work" % odir)
-    assert(0) # testing that working directory was created correctly
 
-    tmp8    = img3.mmap_create("%s/work/tmp8.raw" % odir, np.dtype("uint8"), shape)
+    tmp8    = img3.mmap_create("%s/tmp8.raw" % odir, np.dtype("uint8"), shape)
     img3.memset(tmp8, 0)
-    work    = img3.mmap_create("%s/work/work.raw" % odir, np.dtype(np.int64), shape)
+    work    = img3.mmap_create("%s/work.raw" % odir, np.dtype(np.int64), shape)
     img3.memset(work, 0)
-    labels  = img3.mmap_create("%s/work/labels.raw" % odir, np.dtype(np.int64), shape)
+    labels  = img3.mmap_create("%s/labels.raw" % odir, np.dtype(np.int64), shape)
     img3.memset(labels, 0)
 
     debug = True

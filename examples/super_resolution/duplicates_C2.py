@@ -14,7 +14,7 @@ args = parser.parse_args()
 
 # Load CSV data
 allremoved = []
-ZRES_ = [0.1, 0.5, 1, 2, 10, 20, 100, 200] # minimum resolution in nm
+ZRES_ = [0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6] # minimum resolution in nm
 for cfile in args.i:
 
     print("Processing file:", cfile)
@@ -53,8 +53,9 @@ for p in allremoved:
 
 plt.xlabel("threshold [nm]")
 plt.ylabel("percentage of C2 points removed")
+plt.xscale('log')
+plt.grid()
 plt.savefig("percentage_removed_%s.png" % args.o)
 plt.close()
-
 
 

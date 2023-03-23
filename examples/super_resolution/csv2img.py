@@ -14,6 +14,8 @@ args = parser.parse_args()
 # Load CSV data
 for cfile in args.i:
 
+    print("Processing file:", cfile)
+
     # read data from CSV file
     datafile = pd.read_csv(cfile)
     x = np.asarray(datafile['x [nm]'])

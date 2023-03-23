@@ -1,5 +1,4 @@
 import os
-import sys
 import numba
 import argparse
 import numpy as np
@@ -7,32 +6,15 @@ import pandas as pd
 import img3
 
 
-#@numba.njit(parallel=True)
-#def distance(x, y, z, distances2):
-#    n = len(x)
-#    for j in numba.prange(n):
-#        for i in numba.prange(n):
-#            x_ = x[i]-x[j]
-#            x2 = x_*x_
-#            y_ = y[i]-y[j]
-#            y2 = y_*y_
-#            z_ = z[i]-z[j]
-#            z2 = z_*z_
-#            d2 = x2+y2+z2
-#            if d2<1.0:
-#
-#i/j/k
-#loop over H[:,:,:]:
-#
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', type=str, nargs='+', required=True, help="csv file")
-parser.add_argument('-o', type=str, required=True, help="output directory")
+parser.add_argument('-o', type=str, required=True, help="group")
 args = parser.parse_args()
 
 
 # Load CSV data
+allremoved = []
+ZRES_ = [0.1, 0.5, 1, 2, 10, 20, 100, 200] # minimum resolution in nm
 for cfile in args.i:
 
     print("Processing file:", cfile)
@@ -47,40 +29,32 @@ for cfile in args.i:
     z += zmin
     zmax = np.max(z)
 
-
-    sys.exit()
-
-
-
     # truncated data
-    threshold = 1  # nm
-    xt = np.floor(x/threshold)
-    yt = np.floor(y/threshold)
-    zt = np.floor(z/threshold)
+    nremoved = []
+    for zres in ZRES_:
+        xt = np.floor(x/zres)
+        yt = np.floor(y/zres)
+        zt = np.floor(z/zres)
 
-    
+        # keep only unique particle rows
+        C2 = (np.vstack([xt,yt,zt])).T
+        unique_C2 = np.unique(C2, axis=0)
+
+        nremoved.append( (len(C2)-len(unique_C2)) / len(C2) * 100. )
+
+    print(nremoved)
+    allremoved.append(nremoved)
 
 
-    # choose a voxel size in um
-    px = 0.001
-    py = 0.001
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(12,8))
+for p in allremoved:
+    plt.plot(ZRES_,p, '-o')
 
-    # choose a 3D image shape
-    shape = (2120, 3405)
-    limits = (shape[0]*px*1.e3, shape[1]*py*1.e3)
-
-    # 3D histogram
-    sample = (np.vstack([x,y])).T
-    print(sample.shape)
-    H, edges = np.histogramdd(sample, range=( (0,limits[0]), (0,limits[1]) ), bins=shape )
-
-    # check distances for C2
-    N = len(x)
-    Npairs = int(0.5*(N*(N-1)) + N)
-    distances2 = np.zeros(Npairs)
-    distance(x, y, z, distances2)
-
-    # write to file
+plt.xlabel("threshold [nm]")
+plt.ylabel("percentage of C2 points removed")
+plt.savefig("percentage_removed_%s.png" % args.o)
+plt.close()
 
 
 

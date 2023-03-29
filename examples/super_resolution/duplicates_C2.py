@@ -1,3 +1,12 @@
+###################################################
+# File Name     : duplicates_C2.py
+# Creation Date : 23-03-2023
+# Last Modified : Wed 29 Mar 2023 12:22:40 PM UTC
+# Author        : Athena Economides
+# Email         : athena.economides@uzh.ch
+###################################################
+
+
 import os
 import numba
 import argparse

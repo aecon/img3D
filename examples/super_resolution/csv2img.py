@@ -1,3 +1,12 @@
+###################################################
+# File Name     : csv2img.py
+# Creation Date : 09-03-2023
+# Last Modified : Wed 29 Mar 2023 12:26:56 PM UTC
+# Author        : Athena Economides
+# Email         : athena.economides@uzh.ch
+###################################################
+
+
 import os
 import argparse
 import numpy as np

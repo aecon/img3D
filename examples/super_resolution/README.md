@@ -11,6 +11,15 @@ CSV files are obtained from microscope
 
 ## Image Processing
 
+### Pre-processing
+* Quntify percent of duplicate C2 marker entries based on a minimum separation distance between markers.  
+```
+python3.8 duplicates_C2.py -i <list of csv files (different Fields) from ONE group> -o <group name>
+```
+
+
+### Main processing pipeline
+
 1. Map CSV data to 3D images
 ```
 python3.8 csv2img.py -i <list of CSV files>

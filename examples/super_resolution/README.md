@@ -20,13 +20,9 @@ python3.8 duplicates_C2.py -i <list of csv files (different Fields) from ONE gro
 
 ### Main processing pipeline
 
-1. Map CSV data to 3D images
+Single file for whole data processing
 ```
-python3.8 csv2img.py -i <list of CSV files>
+./run_process_all.sh
 ```
 
-2. Identification of Cluster Overlays between C2-C1 and C2-C4
-```
-python3.8 cluster_overlay.py -m <C2 nrrd files> -c <C1/C4 nrrd files>
-```
 

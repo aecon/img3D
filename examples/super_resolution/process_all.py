@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : process_all.py
 # Creation Date : 29-03-2023
-# Last Modified : Wed 29 Mar 2023 01:39:19 PM UTC
+# Last Modified : Wed 29 Mar 2023 03:35:05 PM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -72,7 +72,7 @@ def bin_particles(shape, limits, sample, odir, myfile):
 
 start = time.time()
 
-WORK = "/home/aecono/work"
+WORK = "/mnt/vol500/WORK"
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-m', type=str, nargs='+', required=True, help="MARKER (C2) csv file")

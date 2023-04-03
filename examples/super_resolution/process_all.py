@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : process_all.py
 # Creation Date : 29-03-2023
-# Last Modified : Wed 29 Mar 2023 03:35:05 PM UTC
+# Last Modified : Mon 03 Apr 2023 08:52:47 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -72,12 +72,10 @@ def bin_particles(shape, limits, sample, odir, myfile):
 
 start = time.time()
 
-WORK = "/mnt/vol500/WORK"
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-m', type=str, nargs='+', required=True, help="MARKER (C2) csv file")
 parser.add_argument('-c', type=str, nargs='+', required=True, help="LOCATION (C1/4) csv file")
-parser.add_argument('-g', type=str, required=True, help="group (condition)")
+parser.add_argument('-o', type=str, required=True, help="outdir")
 # Defaults
 parser.add_argument('-res', type=float, default=10, help="minimum resolution in nm")
 args = parser.parse_args()
@@ -87,7 +85,7 @@ args = parser.parse_args()
 # Loop over csv file pairs
 for fm,fc in zip(args.m, args.c):
 
-    odir = "%s/%s" % (WORK, args.g)
+    odir = args.o
     print("Output directory:", odir)
 
     print("Processing files:")

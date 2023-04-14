@@ -7,7 +7,7 @@ Number=404
 CONDITIONS=("Ctl" "Gly" "PB" "TTX")
 CHANNELS=("1" "4")
 
-RESOLUTION=15  # nanometers
+RESOLUTION=5  # nanometers
 
 
 # Loop over Conditions
@@ -45,6 +45,8 @@ for Channel in ${CHANNELS[@]}; do
         rm -rf ${WORKDIR}/work.raw
         rm -rf ${WORKDIR}/tmp8.raw
         rm -rf ${WORKDIR}/labels.raw
+        rm -rf ${WORKDIR}/labels16_*.raw
+        rm -rf ${WORKDIR}/labels16_*.nrrd
 
     done
 done  # channels loop

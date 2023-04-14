@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : process_all.py
 # Creation Date : 29-03-2023
-# Last Modified : Mon 03 Apr 2023 08:52:47 AM UTC
+# Last Modified : Fri 14 Apr 2023 05:43:13 PM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -53,8 +53,6 @@ def bin_particles(shape, limits, sample, odir, myfile):
     H, edges = np.histogramdd(sample, range=( (0,limits[0]), (0,limits[1]), (0,limits[2]) ), bins=shape )
 
     # save to 3D image
-    if not os.path.exists(odir):
-        os.makedirs(odir)
     fraw  = "%s/%s.raw"  % (odir, os.path.basename(myfile))
     fnrrd = "%s/%s.nrrd" % (odir, os.path.basename(myfile))
     print(fraw)
@@ -87,6 +85,8 @@ for fm,fc in zip(args.m, args.c):
 
     odir = args.o
     print("Output directory:", odir)
+    if not os.path.exists(odir):
+        os.makedirs(odir)
 
     print("Processing files:")
     print(" > %s" % fc)
@@ -117,6 +117,10 @@ for fm,fc in zip(args.m, args.c):
 
     percentage_removed = (len(C2)-len(unique_C2)) / len(C2) * 100.
     stamp("Percentage of C2 markers removed: %.2f%%" % percentage_removed)
+    with open('%s/percent_markers_removed_%s.dat' % (odir,os.path.basename(fc)), 'w') as f:
+        f.write("%.2f\n" % percentage_removed)
+        f.close()
+
 
     # keep unique markers from original data
     xu = x[indices]
@@ -179,7 +183,7 @@ for fm,fc in zip(args.m, args.c):
 
     # Binarization
     stamp("Thresholding and Binarization x2")
-    min_particles = 2 # Ignore bins with 2 and fewer particles
+    min_particles = 1 # Ignore bins with 1 and fewer particles
     # marker
     bin_m = np.zeros(img_m.shape, dtype=np.dtype("uint8"))
     binarize(img_m, bin_m, min_particles)

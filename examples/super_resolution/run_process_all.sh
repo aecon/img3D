@@ -2,7 +2,7 @@
 set -eu
 
 Dataset="PSD-Syn-TDP"
-Number=404
+Number=369   # 369  404  409  TDP/
 
 CONDITIONS=("Ctl" "Gly" "PB" "TTX")
 CHANNELS=("1" "4")
@@ -42,11 +42,13 @@ for Channel in ${CHANNELS[@]}; do
 
         # Remove intermediate files
         echo "Removing temporary work files ..."
-        rm -rf ${WORKDIR}/work.raw
-        rm -rf ${WORKDIR}/tmp8.raw
-        rm -rf ${WORKDIR}/labels.raw
-        rm -rf ${WORKDIR}/labels16_*.raw
-        rm -rf ${WORKDIR}/labels16_*.nrrd
+        rm -rf ${WORKDIR}/*.raw
+        rm -rf ${WORKDIR}/*.nrrd
+#        rm -rf ${WORKDIR}/work.raw
+#        rm -rf ${WORKDIR}/tmp8.raw
+#        rm -rf ${WORKDIR}/labels.raw
+#        rm -rf ${WORKDIR}/labels16_*.raw
+#        rm -rf ${WORKDIR}/labels16_*.nrrd
 
     done
 done  # channels loop

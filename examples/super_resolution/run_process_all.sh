@@ -7,6 +7,7 @@ Number=404
 CONDITIONS=("Ctl" "Gly" "PB" "TTX")
 CHANNELS=("1" "4")
 
+RESOLUTION=15  # nanometers
 
 
 # Loop over Conditions
@@ -22,7 +23,7 @@ for Channel in ${CHANNELS[@]}; do
     DATADIR="/mnt/vol500/DATA/${Dataset}/${Number}/${Condition}"
 
     # Generation of image and data files
-    WORKDIR="/mnt/vol500/WORK/${Dataset}/${Number}/${Condition}"
+    WORKDIR="/mnt/vol500/WORK/${Dataset}_Res${RESOLUTION}nm/${Number}/${Condition}"
 
     # Get number of fields (F?)
     Nfields=`find ${DATADIR} -name "*_C2_*.csv" | wc -l`
@@ -37,7 +38,7 @@ for Channel in ${CHANNELS[@]}; do
         ls $DATA_M
         ls $DATA_C
 
-        python3 process_all.py -m "${DATA_M}" -c "${DATA_C}" -o "${WORKDIR}"
+        python3 process_all.py -m "${DATA_M}" -c "${DATA_C}" -o "${WORKDIR}" -res ${RESOLUTION}
 
         # Remove intermediate files
         echo "Removing temporary work files ..."

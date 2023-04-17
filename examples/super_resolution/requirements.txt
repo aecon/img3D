@@ -1,1 +1,0 @@
-pip3 install --user numpy pandas scipy numba scikit-image matplotlib rdfpy

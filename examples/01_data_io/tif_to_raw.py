@@ -1,7 +1,7 @@
 ###################################################
-# File Name     : main.py
+# File Name     : tif_to_raw.py
 # Creation Date : 18-04-2023
-# Last Modified : Tue 18 Apr 2023 03:18:48 PM UTC
+# Last Modified : Tue 18 Apr 2023 03:24:00 PM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################

@@ -157,6 +157,33 @@ byte skip: %d
 """ % (type, *shape, *space, order, os.path.basename(raw_path), byte_skip))
 
 
+def nrrd_details(nrrd_path):
+    me = "img3.py (nrrd_details)"
+    try:
+        nrrd        = nrrd_read(nrrd_path)
+    except FileNotFoundError:
+        sys.stderr.write("%s: file not found '%s'\n" % (me, nrrd_path))
+        sys.exit(1)
+    dtype       = nrrd["type"]
+    path        = nrrd["path"]
+    shape       = nrrd["sizes"]
+    offset      = nrrd.get("byte skip", 0)
+    dx, dy, dz  = nrrd.get("spacings")
+    return dtype, path, shape, offset, dx, dy, dz
+
+
+def read_input(nrrd_path, path, dtype, offset, shape):
+    me = "img3.py (read_input)"
+    try:
+        a0 = numpy.memmap(path, dtype, 'r', offset=offset, shape=shape, order='F')
+    except FileNotFoundError:
+        sys.stderr.write("%s: file not found '%s'\n" % (me, nrrd_path))
+        sys.exit(1)
+    except ValueError:
+        sys.stderr.write("%s: wrong size/type '%s'\n" % (me, nrrd_path))
+        sys.exit(1)
+    return a0
+
 
 def tif2raw(input_path, output_path, nrrd_path, Verbose=False):
     me = "img3 (tif2raw)"

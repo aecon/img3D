@@ -33,4 +33,5 @@ The package was developed in the labs of Prof. Petros Koumoutsakos (ETH Zurich) 
 * Sergey Litvinov (lisergey@ethz.ch)
 * Athena Economides (athena.eco@gmail.com)
 
+Data acquisition was performed by Francesca Catto.
 

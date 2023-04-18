@@ -8,12 +8,18 @@ import re
 import scipy.signal
 import site
 import sys
+import tifffile
 
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Input / Output
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+def usg(msg):
+    sys.stderr.write(msg)
+    sys.exit(2)
 
 
 def mmap_create(path, dtype, shape, order='F'):
@@ -152,24 +158,29 @@ byte skip: %d
 
 
 
-def tif2raw(input_path, output_raw, output_nrrd):
-    """
-    input_path: path to tif file, eg: /path/to/data.tif
-    output_raw: path to raw file, eg: /path/to/data.raw
-    """
-    print("...converting tif to raw!")
+def tif2raw(input_path, output_path, nrrd_path, Verbose=False):
+    me = "img3 (tif2raw)"
+    msg = "%s arguments: (input.tif, output.raw, output.nrrd, [Verbose])\n" % me
+    if input_path == None:
+        usg(msg)
+    if output_path == None:
+        usg(msg)
+    if nrrd_path == None:
+        usg(msg)
     input = tifffile.TiffFile(input_path)
     dtype = input.pages[0].dtype
     nz = len(input.pages)
     ny, nx = input.pages[0].shape
     shape = nx, ny, nz
-    sys.stderr.write("%s %s\n" % (shape, dtype))
-    output = io.mmap_create(output_raw, dtype, shape)
+    if Verbose:
+        sys.stderr.write("%s: %s %s\n" % (me, shape, dtype))
+    output = mmap_create(output_path, dtype, shape)
     for k, page in enumerate(input.pages):
-        sys.stderr.write("%d/%d\n" % (k + 1, nz))
+        if Verbose:
+            sys.stderr.write("%s: %d/%d\n" % (me, k + 1, nz))
         a = page.asarray().T
-        np.copyto(output[:, :, k], a, 'no')
-    io.nrrd_write(output_nrrd, output_raw, dtype, shape, (1, 1, 1))
+        numpy.copyto(output[:, :, k], a, 'no')
+    nrrd_write(nrrd_path, output_path, dtype, shape, (1, 1, 1))
 
 
 

@@ -22,7 +22,7 @@ The img3D package is organized as follows:
 
 ```
 cd src
-make instal PY=python3
+make install PY=python3
 ```
 To use a particular version of python replace `python3` in the line above with your python version.
 

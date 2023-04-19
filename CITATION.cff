@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Litvinov
+    given-names: Sergey
+    orcid:
+  - family-names: Economides
+    given-names: Athena
+    orcid:
+title: "img3D: An Image Processing library for large 3D image data."
+version: 1.0.0
+doi: 
+date-released: 

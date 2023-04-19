@@ -321,4 +321,26 @@ def objects(label, nobj):
     return lst
 
 
+def erosion(input, nstep, output):
+    assert input.ndim == 3
+    assert output.ndim == 3
+    assert input.shape == output.shape
+    assert nstep >= 0
+    path = os.path.dirname(os.path.realpath(__file__))
+    lib = numpy.ctypeslib.load_library('adv0.so', path)
+    fun = lib.erosion
+    fun.restype = None
+    fun.argtypes = [
+        ctypes.c_ulong,
+        ctypes.c_ulong,
+        ctypes.c_ulong,
+        numpy.ctypeslib.ndpointer(numpy.dtype("uint8"),
+                                  flags='aligned, f_contiguous, writeable'),
+        ctypes.c_ulong,
+        numpy.ctypeslib.ndpointer(numpy.dtype("uint8"),
+                                  flags='aligned, f_contiguous, writeable'),
+    ]
+    fun(*input.shape, input, nstep, output)
+
+
 

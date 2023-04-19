@@ -249,4 +249,55 @@ uint64_t remove_small_objects(uint64_t n, int64_t *input, uint64_t min_size,
   return cnt;
 }
 
+void erosion(uint64_t nx, uint64_t ny, uint64_t nz, uint8_t *input,
+             uint64_t nstep, uint8_t *output) {
+  uint64_t step;
+  int Verbose;
+  uint8_t *a;
+  uint8_t *b;
+  uint8_t *t;
+  Verbose = (getenv("IMG3_VERBOSE") != NULL);
+  if (Verbose)
+    fprintf(stderr,
+            "img3.erosion: nx, ny, nz, nstep: %" PRIu64 ", %" PRIu64 ", %" PRIu64
+            ", %" PRIu64 "\n",
+            nx, ny, nz, nstep);
+
+  a = output;
+  b = input;
+
+  for (step = 0; step < nstep; step++) {
+    t = a;
+    a = b;
+    b = t;
+#pragma omp parallel for
+    for (int64_t k = 0; k < nz; k++) {
+      if (Verbose)
+        fprintf(stderr, "img3.erosion [%d]: %" PRIi64 " / %" PRIu64 "\n",
+                omp_get_thread_num(), k + 1, nz);
+      for (int64_t j = 0; j < ny; j++)
+        for (int64_t i = 0; i < nx; i++) {
+          int64_t u, v, w;
+          int64_t x, y, z;
+          b[k * nx * ny + j * nx + i] = a[k * nx * ny + j * nx + i];
+          for (w = -1; w < 2; w++)
+            for (v = -1; v < 2; v++)
+              for (u = -1; u < 2; u++) {
+                x = i + u;
+                y = j + v;
+                z = k + w;
+                if (x >= 0 && x < nx && y >= 0 && y < ny && z >= 0 && z < nz &&
+                    a[z * nx * ny + y * nx + x] == 0) {
+                  b[k * nx * ny + j * nx + i] = 0;
+                  goto end;
+                }
+              }
+        end:;
+        }
+    }
+  }
+  if (b == input)
+    for (int64_t i = 0; i < nx * ny * nz; i++)
+      output[i] = input[i];
+}
 

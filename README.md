@@ -19,7 +19,7 @@ The img3D package is organized as follows:
 
 * C compiler with OpenMP support
 * ImageJ
-* Python packages: tifffile, numba, scipy.signal, matplotlib
+* Python packages: tifffile, numba, scipy.signal
 
 ## Compilation
 

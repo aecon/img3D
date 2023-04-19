@@ -329,7 +329,7 @@ def gauss(input, mask, sigma, output):
     assert input.shape == output.shape
     assert sigma > 0
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('adv0.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.gauss
     fun.restype = None
     fun.argtypes = [
@@ -354,7 +354,7 @@ def erosion(input, nstep, output):
     assert input.shape == output.shape
     assert nstep >= 0
     path = os.path.dirname(os.path.realpath(__file__))
-    lib = numpy.ctypeslib.load_library('adv0.so', path)
+    lib = numpy.ctypeslib.load_library('img30.so', path)
     fun = lib.erosion
     fun.restype = None
     fun.argtypes = [

@@ -7,7 +7,7 @@ Simple and independent use cases for the methods provided in the img3 library.
 **Note**: The examples are provided in an incremental learning order.
 Knowledge gained from previous examples is assume known in later examples.
 
-**Note 2**: The examples assume that the dataset below has been downloaded inside the folder `examples`.
+**Note 2**: The examples assume that the dataset below has been downloaded inside the folder `img3D/examples/`.
 
 
 ## Data

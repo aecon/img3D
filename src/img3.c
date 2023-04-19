@@ -76,7 +76,8 @@ void convolve(uint64_t nx, uint64_t ny, uint64_t nz, const float *input,
   Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
     fprintf(stderr,
-            "img3.convolve: nx, ny, nz: %" PRIu64 ", %" PRIu64 ", %" PRIu64 "\n",
+            "img3.convolve: nx, ny, nz: %" PRIu64 ", %" PRIu64 ", %" PRIu64
+            "\n",
             nx, ny, nz);
   const double s[3][3][3] = {
       {
@@ -236,8 +237,8 @@ void erosion(uint64_t nx, uint64_t ny, uint64_t nz, uint8_t *input,
   Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
     fprintf(stderr,
-            "img3.erosion: nx, ny, nz, nstep: %" PRIu64 ", %" PRIu64 ", %" PRIu64
-            ", %" PRIu64 "\n",
+            "img3.erosion: nx, ny, nz, nstep: %" PRIu64 ", %" PRIu64
+            ", %" PRIu64 ", %" PRIu64 "\n",
             nx, ny, nz, nstep);
 
   a = output;
@@ -249,9 +250,14 @@ void erosion(uint64_t nx, uint64_t ny, uint64_t nz, uint8_t *input,
     b = t;
 #pragma omp parallel for
     for (int64_t k = 0; k < nz; k++) {
-      if (Verbose)
+      if (Verbose) {
+#ifdef _OPENMP
         fprintf(stderr, "img3.erosion [%d]: %" PRIi64 " / %" PRIu64 "\n",
                 omp_get_thread_num(), k + 1, nz);
+#else
+        fprintf(stderr, "img3.erosion: %" PRIi64 " / %" PRIu64 "\n", k + 1, nz);
+#endif
+      }
       for (int64_t j = 0; j < ny; j++)
         for (int64_t i = 0; i < nx; i++) {
           int64_t u, v, w;

@@ -25,9 +25,16 @@ The img3D package is organized as follows:
 
 ```
 cd src
-make install PY=python3
+make install
 ```
-To use a particular version of python replace `python3` in the line above with your python version.
+
+To customize the python interpreter, C compiler, and the compilation
+flags:
+
+```
+cd src
+make install PY=python CC=clang CFLAGS_OPENMP= 'CFLAGS = -O2 -g'
+```
 
 
 ## Authors

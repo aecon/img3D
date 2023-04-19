@@ -3,6 +3,8 @@
 PY = python3
 CC = c99
 CFLAGS = -O3
+CFLAGS_OPENMP = -fopenmp
+CFLAGS_SHARED = -shared -fPIC
 
 all: install
 M = \
@@ -16,5 +18,5 @@ install: $M
 	printf '%s\n' "$$p"
 
 img30.so: img3.c
-	$(CC) $(CFLAGS) -fopenmp -shared -fPIC -o $@ $< $(LDFLAGS)
+	$(CC) $(CFLAGS) $(CFLAGS_OPENMP) $(CFLAGS_SHARED) -o $@ $< $(LDFLAGS)
 clean:; rm -f img30.so

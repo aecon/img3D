@@ -7,8 +7,10 @@ import os
 import re
 import site
 import sys
-import tifffile
-
+try:
+    import tifffile
+except ModuleNotFoundError:
+    tifffile = None
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,6 +195,8 @@ def tif2raw(input_path, output_path, nrrd_path, Verbose=False):
         usg(msg)
     if nrrd_path == None:
         usg(msg)
+    if tifffile == None:
+        usg("%s: requires python package `tifffile'\n" % me)
     input = tifffile.TiffFile(input_path)
     dtype = input.pages[0].dtype
     nz = len(input.pages)

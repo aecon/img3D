@@ -1,2 +1,0 @@
-cd build
-make install PY=python3.8

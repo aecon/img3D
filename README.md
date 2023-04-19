@@ -4,19 +4,22 @@ Image Processing package for large, 3D (volumetric) image data
 
 ## Code Structure
 
-The img3D package is organized as follows:  
-* `src`      : Contains source (C and Python) files.  
-* `examples` : Contains examples use cases of the package.  
+The img3D package is organized as follows:
+* [src][src/]      : Contains source (C and Python) files.
+* [examples][examples/] : Contains examples use cases of the package.
 
 
 
 ## Requirements
 
-* OpenMP  
-* gcc
-* Python packages: numpy pandas scipy numba scikit-image matplotlib
+* C compiler
+* numpy
 
+## Optional requirements
 
+* C compiler with OpenMP support
+* ImageJ
+* Python packages: tifffile, numba, scipy.signal, matplotlib
 
 ## Compilation
 
@@ -34,4 +37,3 @@ The package was developed in the labs of Prof. Petros Koumoutsakos (ETH Zurich) 
 * Athena Economides (athena.eco@gmail.com)
 
 Data acquisition was performed by Francesca Catto.
-

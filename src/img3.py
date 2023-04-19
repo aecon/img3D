@@ -5,7 +5,6 @@ import numpy
 import operator
 import os
 import re
-import scipy.signal
 import site
 import sys
 import tifffile

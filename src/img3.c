@@ -70,8 +70,6 @@ void objects(uint64_t npixel, const int64_t *c, uint64_t nobj, uint64_t *start,
   free(cum);
 }
 
-
-
 void convolve(uint64_t nx, uint64_t ny, uint64_t nz, const float *input,
               const uint8_t *mask, float *output) {
   int Verbose;
@@ -128,16 +126,157 @@ void convolve(uint64_t nx, uint64_t ny, uint64_t nz, const float *input,
   }
 }
 
-
-void memset0(void *input, int c, uint64_t n) {
+void gauss(uint64_t nx, uint64_t ny, uint64_t nz, float *input,
+           const uint8_t *mask, double sigma, float *output) {
   int Verbose;
+  int s;
+  int i;
+  double *c;
+
+  s = ceil(sigma * 3.0) + 1;
   Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
-    fprintf(stderr, "img3.fill: c, n: %d %" PRIu64 "\n", c, n);
-  memset(input, c, n);
+    fprintf(stderr,
+            "img3.gauss: nx, ny, nz, sigma: %" PRIu64 ", %" PRIu64 ", %" PRIu64
+            ", %.16e, %d\n",
+            nx, ny, nz, sigma, s);
+
+  if ((c = malloc(s * sizeof *c)) == NULL) {
+    fprintf(stderr, "%s:%d: malloc failed\n", __FILE__, __LINE__);
+    exit(1);
+  }
+
+  for (i = 0; i < s; i++)
+    c[i] = exp(-i * i / (2 * sigma));
+  if (Verbose)
+    fprintf(stderr, "img3.gauss: stage 1/3\n");
+#pragma omp parallel for
+  for (int64_t k = 0; k < nz; k++)
+    for (int64_t j = 0; j < ny; j++)
+      for (int64_t i = 0; i < nx; i++)
+        if (mask[k * nx * ny + j * nx + i] != 0) {
+          int64_t u;
+          int64_t x;
+          double cnt;
+          double sum;
+          double ker;
+          cnt = 0;
+          sum = 0;
+          for (u = -s + 1; u < s; u++) {
+            x = i + u;
+            if (x >= 0 && x < nx && mask[k * nx * ny + j * nx + x] != 0) {
+              ker = u > 0 ? c[u] : c[-u];
+              cnt += ker;
+              sum += ker * input[k * nx * ny + j * nx + x];
+            }
+          }
+          output[k * nx * ny + j * nx + i] = sum / cnt;
+        }
+
+  if (Verbose)
+    fprintf(stderr, "img3.gauss: stage 2/3\n");
+#pragma omp parallel for
+  for (int64_t k = 0; k < nz; k++)
+    for (int64_t j = 0; j < ny; j++)
+      for (int64_t i = 0; i < nx; i++)
+        if (mask[k * nx * ny + j * nx + i] != 0) {
+          int64_t v;
+          int64_t y;
+          double cnt;
+          double sum;
+          double ker;
+          cnt = 0;
+          sum = 0;
+          for (v = -s + 1; v < s; v++) {
+            y = j + v;
+            if (y >= 0 && y < ny && mask[k * nx * ny + y * nx + i] != 0) {
+              ker = v > 0 ? c[v] : c[-v];
+              cnt += ker;
+              sum += ker * output[k * nx * ny + y * nx + i];
+            }
+          }
+          input[k * nx * ny + j * nx + i] = sum / cnt;
+        }
+
+  if (Verbose)
+    fprintf(stderr, "img3.gauss: stage 3/3\n");
+#pragma omp parallel for
+  for (int64_t k = 0; k < nz; k++)
+    for (int64_t j = 0; j < ny; j++)
+      for (int64_t i = 0; i < nx; i++)
+        if (mask[k * nx * ny + j * nx + i] != 0) {
+          int64_t w;
+          int64_t z;
+          double cnt;
+          double sum;
+          double ker;
+          cnt = 0;
+          sum = 0;
+          for (w = -s + 1; w < s; w++) {
+            z = k + w;
+            if (z >= 0 && z < nz && mask[z * nx * ny + j * nx + i] != 0) {
+              ker = w > 0 ? c[w] : c[-w];
+              cnt += ker;
+              sum += ker * input[z * nx * ny + j * nx + i];
+            }
+          }
+          output[k * nx * ny + j * nx + i] = sum / cnt;
+        }
+
+  free(c);
 }
 
+void erosion(uint64_t nx, uint64_t ny, uint64_t nz, uint8_t *input,
+             uint64_t nstep, uint8_t *output) {
+  uint64_t step;
+  int Verbose;
+  uint8_t *a;
+  uint8_t *b;
+  uint8_t *t;
+  Verbose = (getenv("IMG3_VERBOSE") != NULL);
+  if (Verbose)
+    fprintf(stderr,
+            "img3.erosion: nx, ny, nz, nstep: %" PRIu64 ", %" PRIu64 ", %" PRIu64
+            ", %" PRIu64 "\n",
+            nx, ny, nz, nstep);
 
+  a = output;
+  b = input;
+
+  for (step = 0; step < nstep; step++) {
+    t = a;
+    a = b;
+    b = t;
+#pragma omp parallel for
+    for (int64_t k = 0; k < nz; k++) {
+      if (Verbose)
+        fprintf(stderr, "img3.erosion [%d]: %" PRIi64 " / %" PRIu64 "\n",
+                omp_get_thread_num(), k + 1, nz);
+      for (int64_t j = 0; j < ny; j++)
+        for (int64_t i = 0; i < nx; i++) {
+          int64_t u, v, w;
+          int64_t x, y, z;
+          b[k * nx * ny + j * nx + i] = a[k * nx * ny + j * nx + i];
+          for (w = -1; w < 2; w++)
+            for (v = -1; v < 2; v++)
+              for (u = -1; u < 2; u++) {
+                x = i + u;
+                y = j + v;
+                z = k + w;
+                if (x >= 0 && x < nx && y >= 0 && y < ny && z >= 0 && z < nz &&
+                    a[z * nx * ny + y * nx + x] == 0) {
+                  b[k * nx * ny + j * nx + i] = 0;
+                  goto end;
+                }
+              }
+        end:;
+        }
+    }
+  }
+  if (b == input)
+    for (int64_t i = 0; i < nx * ny * nz; i++)
+      output[i] = input[i];
+}
 
 static uint64_t find(int64_t *root, int64_t v) {
   if (v == root[v])
@@ -249,55 +388,10 @@ uint64_t remove_small_objects(uint64_t n, int64_t *input, uint64_t min_size,
   return cnt;
 }
 
-void erosion(uint64_t nx, uint64_t ny, uint64_t nz, uint8_t *input,
-             uint64_t nstep, uint8_t *output) {
-  uint64_t step;
+void memset0(void *input, int c, uint64_t n) {
   int Verbose;
-  uint8_t *a;
-  uint8_t *b;
-  uint8_t *t;
   Verbose = (getenv("IMG3_VERBOSE") != NULL);
   if (Verbose)
-    fprintf(stderr,
-            "img3.erosion: nx, ny, nz, nstep: %" PRIu64 ", %" PRIu64 ", %" PRIu64
-            ", %" PRIu64 "\n",
-            nx, ny, nz, nstep);
-
-  a = output;
-  b = input;
-
-  for (step = 0; step < nstep; step++) {
-    t = a;
-    a = b;
-    b = t;
-#pragma omp parallel for
-    for (int64_t k = 0; k < nz; k++) {
-      if (Verbose)
-        fprintf(stderr, "img3.erosion [%d]: %" PRIi64 " / %" PRIu64 "\n",
-                omp_get_thread_num(), k + 1, nz);
-      for (int64_t j = 0; j < ny; j++)
-        for (int64_t i = 0; i < nx; i++) {
-          int64_t u, v, w;
-          int64_t x, y, z;
-          b[k * nx * ny + j * nx + i] = a[k * nx * ny + j * nx + i];
-          for (w = -1; w < 2; w++)
-            for (v = -1; v < 2; v++)
-              for (u = -1; u < 2; u++) {
-                x = i + u;
-                y = j + v;
-                z = k + w;
-                if (x >= 0 && x < nx && y >= 0 && y < ny && z >= 0 && z < nz &&
-                    a[z * nx * ny + y * nx + x] == 0) {
-                  b[k * nx * ny + j * nx + i] = 0;
-                  goto end;
-                }
-              }
-        end:;
-        }
-    }
-  }
-  if (b == input)
-    for (int64_t i = 0; i < nx * ny * nz; i++)
-      output[i] = input[i];
+    fprintf(stderr, "img3.fill: c, n: %d %" PRIu64 "\n", c, n);
+  memset(input, c, n);
 }
-

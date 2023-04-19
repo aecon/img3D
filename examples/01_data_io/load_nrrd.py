@@ -1,7 +1,7 @@
 ###################################################
-# File Name     : load_save_nrrd.py
+# File Name     : load_nrrd.py
 # Creation Date : 18-04-2023
-# Last Modified : Tue 18 Apr 2023 03:36:41 PM UTC
+# Last Modified : Wed 19 Apr 2023 08:32:05 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################

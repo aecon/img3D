@@ -1,4 +1,4 @@
-# Example: Data input / output
+# Example: tif to raw
 
 ### Convert tif to raw/nrrd file formats
 

@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : copy.py
 # Creation Date : 19-04-2023
-# Last Modified : Wed 19 Apr 2023 10:08:16 AM UTC
+# Last Modified : Wed 19 Apr 2023 10:49:17 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -28,7 +28,7 @@ if __name__ == "__main__":
     dtype, path, shape, offset, dx, dy, dz = img3.nrrd_details(nrrd_path)
     raw_path = img3.read_input(nrrd_path, path, dtype, offset, shape)
 
-    # Create space for output file
+    # Reserve storage for output file
     output_raw = img3.mmap_create("output.raw", dtype, shape)
     spacings = (1,1,1)
     img3.nrrd_write("output.nrrd", "output.raw", output_raw.dtype, output_raw.shape, spacings)

@@ -4,9 +4,9 @@ This example uses the python library `numba` to parallelize the operation of cop
 
 To run the example:
 ```
-python3 copy.py
+python3 duplicate.py
 ```
 
-After running the example, two new files `output.raw` and `output.nrrd` should appear in this folder.
-The content of `output.raw` should be identical to `../data/example.raw`.
+After running the example, two new pairs of raw/nrrd files should appear in this folder (`example3.raw`, `example3o.raw`).
+Their content should be identical to `../large_data.tif`.
 

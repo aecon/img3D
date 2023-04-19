@@ -7,6 +7,6 @@ To run the example:
 python3 memset.py
 ```
 
-After running the example, two new files `output.raw` and `output.nrrd` should appear in this folder.
-All pixels of `output.raw` should have a value 10.
+After running the example, two new files `example4.raw` and `example4.nrrd` should appear in this folder.
+All pixels of `example4.raw` should have a value 10.
 

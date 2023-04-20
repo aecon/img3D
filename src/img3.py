@@ -374,7 +374,7 @@ def erosion(input, nstep, output):
 
 
 def points_write(path, a):
-    me = "adv.py"
+    me = "img3.py"
     dtype = numpy.dtype(">i4")
     n = len(a)
     if n > 0 and len(a[0]) != 3:
@@ -382,7 +382,7 @@ def points_write(path, a):
                         path)
     with open(path, "wb") as file:
         file.write(b"""# vtk DataFile Version 2.0
-adv.py
+img3.py
 BINARY
 DATASET POLYDATA
 POINTS %d int

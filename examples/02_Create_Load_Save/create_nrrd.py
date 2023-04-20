@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : create_nrrd.py
 # Creation Date : 20-04-2023
-# Last Modified : Thu 20 Apr 2023 09:41:57 AM UTC
+# Last Modified : Thu 20 Apr 2023 09:45:56 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     array1 = img3.mmap_create("example2i.raw", np.dtype(np.uint8), shape)
 
     # - float32 for floating point values
-    array2 = img3.mmap_create("example2ii.raw", np.dtype("float32"), shape)
+    array2 = img3.mmap_create("example2ii.raw", np.dtype(np.float32), shape)
 
     # - int64 for indexing objects
     array3 = img3.mmap_create("example2iii.raw", np.dtype(np.int64), shape)

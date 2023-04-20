@@ -373,4 +373,54 @@ def erosion(input, nstep, output):
     fun(*input.shape, input, nstep, output)
 
 
+def points_write(path, a):
+    me = "adv.py"
+    dtype = numpy.dtype(">i4")
+    n = len(a)
+    if n > 0 and len(a[0]) != 3:
+        raise Exception("fail to write '%s', wrong shape (expect: n x 3)" %
+                        path)
+    with open(path, "wb") as file:
+        file.write(b"""# vtk DataFile Version 2.0
+adv.py
+BINARY
+DATASET POLYDATA
+POINTS %d int
+""" % len(a))
+        offset = file.tell()
+        file.seek(3 * n * dtype.itemsize - 1, 1)
+        file.write(b'\0')
+    with open(path, "r+") as file:
+        buffer = mmap.mmap(file.fileno(), 0, access=mmap.ACCESS_WRITE)
+        array = numpy.ndarray((n, 3), dtype, buffer, offset)
+    numpy.copyto(array, a, 'same_kind')
+
+
+def points_read(path):
+    dtype = numpy.dtype(">i4")
+    max_line = 2048
+    with open(path, "rb") as f:
+        f = open(path, "rb")
+        l = f.readline(max_line)
+        if l != b"# vtk DataFile Version 2.0\n":
+            raise Exception("not a vtk file '%s'" % path)
+        l = f.readline(max_line)  # comment
+        l = f.readline(max_line)
+        if l != b"BINARY\n":
+            raise Exception("not a binary vtk file '%s'" % path)
+        l = f.readline(max_line)  # DATASET
+        if l != b"DATASET POLYDATA\n":
+            raise Exception("not polydata vtk file '%s'\n" % path)
+        l = f.readline(max_line)
+        l = l.split()
+        if not l[2] in (b"int", b"int32"):
+            raise Exception("unsuported type '%s'" % l[2])
+        nv = int(l[1])
+        offset = f.tell()
+    with open(path, "r") as f:
+        buffer = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
+        a = numpy.ndarray((nv, 3), dtype, buffer, offset)
+    return a
+
+
 

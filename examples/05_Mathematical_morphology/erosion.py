@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : erosion.py
 # Creation Date : 19-04-2023
-# Last Modified : Wed 19 Apr 2023 02:30:56 PM UTC
+# Last Modified : Thu 20 Apr 2023 10:30:27 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -13,7 +13,7 @@ import numpy as np
 
 if __name__ == "__main__":
 
-    nrrd_path = "example5.nrrd"
+    nrrd_path = "../data/data.nrrd"
 
     # Load raw/nrrd files
     dtype, path, shape, offset, dx, dy, dz = img3.nrrd_details(nrrd_path)

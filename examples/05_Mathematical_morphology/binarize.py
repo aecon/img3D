@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : binarize.py
 # Creation Date : 19-04-2023
-# Last Modified : Wed 19 Apr 2023 02:28:15 PM UTC
+# Last Modified : Thu 20 Apr 2023 10:20:10 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -23,11 +23,8 @@ def binary(inp, out, val):
 
 if __name__ == "__main__":
 
-    # Generate raw/nrrd files from tif data
-    tif_path = "../large_data.tif"
-    raw_path = "example5.raw"
-    nrrd_path = "example5.nrrd"
-    img3.tif2raw(tif_path, raw_path, nrrd_path)
+    # nrrd file path
+    nrrd_path = "../data/data.nrrd"
 
     # Load raw/nrrd files
     dtype, path, shape, offset, dx, dy, dz = img3.nrrd_details(nrrd_path)

@@ -6,8 +6,8 @@ Image Processing package for large, 3D (volumetric) image data
 
 The img3D package is organized as follows:
 * [src](src/)      : Source (C and Python) files.
-* [examples](examples/) : Example use cases of the package.
-* [pipelines](pipelines/) : Example pipelines for segmentation and object detection.
+* [examples](examples/) : Examples of simple use cases of the package.
+* [pipelines](pipelines/) : Examples of complete pipelines for segmentation and object detection.
 
 
 

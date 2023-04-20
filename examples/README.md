@@ -23,3 +23,15 @@ The dataset was acquired by Francesca Catto via light-sheet microscopy,
 at the University of Zurich, lab of Prof. Adriano Aguzzi.
 
 https://drive.google.com/file/d/1Fho8zM07HInN3Gczs-QB7jvyLc92CFpa/view?usp=sharing
+
+
+## TODO
+
+Must create examples for
+```
+- convolve
+- labels
+- remove_small_objects
+- objects
+- gauss
+```

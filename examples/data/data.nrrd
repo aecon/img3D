@@ -1,0 +1,9 @@
+NRRD0001
+type: uchar
+dimension: 3
+sizes: 30 20 10
+spacings: 1.0000000000000000e+00 1.0000000000000000e+00 1.0000000000000000e+00
+encoding: raw
+endian: little
+data file: data.raw
+byte skip: 0

@@ -11,10 +11,11 @@ Knowledge gained from previous examples is assumed known in later examples.
 ### Generation on synthetic data
 To generate a set of example data:
 ```
+cd data/
 python3 gendata.py
 ```
-This will generate a file `large_data.tif` inside the folder `img3D/examples/`.
-All examples assume that the file `large_data.tif` has been generated.
+All examples assume that the synthetic data have been generated.
+
 
 ### Data from light sheet microscopy
 

@@ -4,7 +4,7 @@
 ### Create new raw arrays
 To create a new raw array with a given shape and type
 ```
-python3 create_nrrd.py
+python3 create_raw.py
 ```
 
 

@@ -1,13 +1,22 @@
 # Examples
 
+
+## Data generation
+
+To generate a set of example data:
+```
+python3 gendata.py
+```
+This will generate a file `large_data.tif` inside the folder `img3D/examples/`.
+All examples assume that the file `large_data.tif` has been generated.
+
+
 ## Contents
 
 Simple and independent use cases for the methods provided in the img3 library.
 
 **Note**: The examples are provided in an incremental learning order.
 Knowledge gained from previous examples is assume known in later examples.
-
-**Note 2**: The examples assume that the dataset below has been downloaded inside the folder `img3D/examples/`.
 
 
 ## Data

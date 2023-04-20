@@ -1,15 +1,18 @@
 # Example: Convolutions
 
-TODO
 
 
 ### Gaussian smoothing
+
+To perform a Gaussian smoothing (blur) of your data do:
 ```
-img3.gauss
+python gauss.py
 ```
 
 
 ### Laplacian of Gaussian
+
+To compute the Laplacian of a Gaussian-smoothed image do:
 ```
-img3.convolve
+python3 laplacian.py
 ```

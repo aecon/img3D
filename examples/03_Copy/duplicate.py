@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : copy.py
 # Creation Date : 19-04-2023
-# Last Modified : Wed 19 Apr 2023 01:56:54 PM UTC
+# Last Modified : Thu 20 Apr 2023 10:18:20 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -22,21 +22,18 @@ def copy_array(inp, out):
 
 if __name__ == "__main__":
 
-    # Generate raw/nrrd files from tif data
-    tif_path = "../large_data.tif"
-    raw_path = "example3.raw"
-    nrrd_path = "example3.nrrd"
-    img3.tif2raw(tif_path, raw_path, nrrd_path)
+    # nrrd file path
+    nrrd_path = "../data/data.nrrd"
 
     # Load raw/nrrd files
     dtype, path, shape, offset, dx, dy, dz = img3.nrrd_details(nrrd_path)
     input_raw = img3.read_input(nrrd_path, path, dtype, offset, shape)
 
     # Reserve storage for output file
-    output_raw = img3.mmap_create("example3o.raw", dtype, shape)
+    output_raw = img3.mmap_create("example3.raw", dtype, shape)
     spacings = (dx,dy,dz)
-    img3.nrrd_write("example3o.nrrd", "example3o.raw", output_raw.dtype, output_raw.shape, spacings)
+    img3.nrrd_write("example3.nrrd", "example3.raw", output_raw.dtype, output_raw.shape, spacings)
 
-    # Copy data from raw_path to output_raw
+    # Copy data from input_raw to output_raw
     copy_array(input_raw, output_raw)
 

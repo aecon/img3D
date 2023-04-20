@@ -8,7 +8,7 @@ To run the binarization example:
 ```
 python3 binarize.py
 ```
-After running the example, two new files `binary.raw` and `binary.nrrd` should appear in this folder. Values 1 correspond to pixels in `../large_data.tif` that have value larger than the threshold 220. Likewise, values 0 correspond to pixels of `../large_data.tif` with values smaller than the threshold.
+After running the example, two new files `binary.raw` and `binary.nrrd` should appear in this folder. Values 1 correspond to pixels in `../data/data.tif` that have value larger than the threshold 220. Likewise, values 0 correspond to pixels of `../data/data.tif` with values smaller than the threshold.
 
 
 ### Erosion

@@ -1,7 +1,7 @@
 ###################################################
 # File Name     : tif_to_raw.py
 # Creation Date : 18-04-2023
-# Last Modified : Wed 19 Apr 2023 01:43:20 PM UTC
+# Last Modified : Thu 20 Apr 2023 10:14:13 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
@@ -11,7 +11,7 @@ import img3
 if __name__ == "__main__":
 
     # Input tif data
-    tif_path = "../large_data.tif"
+    tif_path = "../data/data.tif"
 
     # Specify output raw and nrrd paths
     raw_path = "example1.raw"

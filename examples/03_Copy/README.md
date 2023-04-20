@@ -7,6 +7,6 @@ To run the example:
 python3 duplicate.py
 ```
 
-After running the example, two new pairs of raw/nrrd files should appear in this folder (`example3.raw`, `example3o.raw`).
-Their content should be identical to `../large_data.tif`.
+After running the example, a pair of raw/nrrd files should appear in this folder (`example3.raw`, `example3.nrrd`).
+Their content should be identical to `../data/data.tif`.
 

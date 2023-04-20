@@ -14,7 +14,6 @@ To generate a set of example data:
 cd data/
 python3 gendata.py
 ```
-All examples assume that the synthetic data have been generated.
 
 
 ### Data from light sheet microscopy

@@ -7,6 +7,15 @@ authors:
   - family-names: Economides
     given-names: Athena
     orcid:
+  - family-names: Catto
+    given-names: Francesca
+    orcid:
+  - family-names: Aguzzi
+    given-names: Adriano
+    orcid:
+  - family-names: Koumoutsakos
+    given-names: Petros
+    orcid:    
 title: "img3D: An Image Processing library for large 3D image data."
 version: 1.0.0
 doi: 

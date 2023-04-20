@@ -1,12 +1,15 @@
 # Example: Convolutions
 
+TODO
+
 
 ### Gaussian smoothing
-
-Uses method `img3.gauss`
-
+```
+img3.gauss
+```
 
 
 ### Laplacian of Gaussian
-
-Uses method `img3.convolve`
+```
+img3.convolve
+```

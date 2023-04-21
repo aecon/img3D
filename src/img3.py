@@ -295,6 +295,23 @@ def remove_small_objects(input, min_size, work):
     return fun(input.size, input, min_size, work)
 
 
+def remove_large_objects(input, max_size, work):
+    assert input.size == work.size
+    path = os.path.dirname(os.path.realpath(__file__))
+    lib = numpy.ctypeslib.load_library('img30.so', path)
+    fun = lib.remove_small_objects
+    fun.restype = ctypes.c_ulong
+    fun.argtypes = [
+        ctypes.c_ulong,
+        numpy.ctypeslib.ndpointer(numpy.dtype("int64"),
+                                  flags='aligned, f_contiguous, writeable'),
+        ctypes.c_ulong,
+        numpy.ctypeslib.ndpointer(numpy.dtype("int64"),
+                                  flags='aligned, f_contiguous, writeable'),
+    ]
+    return fun(input.size, input, max_size, work)
+
+
 def objects(label, nobj):
     assert label.ndim == 3
     assert nobj >= 0

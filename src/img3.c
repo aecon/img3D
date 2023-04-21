@@ -356,6 +356,44 @@ uint64_t labels(uint64_t nx, uint64_t ny, uint64_t nz, const uint8_t *input,
   return cnt;
 }
 
+uint64_t remove_large_objects(uint64_t n, int64_t *input, uint64_t max_size,
+                              int64_t *work) {
+  int Verbose;
+  uint64_t i;
+  uint64_t cnt;
+  Verbose = (getenv("IMG3_VERBOSE") != NULL);
+  if (Verbose)
+    fprintf(stderr,
+            "img3.remove_large_objects: n, max_size: %" PRIu64 " %" PRIu64 "\n",
+            n, max_size);
+
+  memset(work, 0, n * sizeof *work);
+
+#pragma omp parallel for
+  for (i = 0; i < n; i++)
+    if (input[i] > 0)
+#pragma omp atomic
+      work[input[i]]++;
+
+  cnt = 0;
+#pragma omp parallel for
+  for (i = 1; i < n; i++) {
+    uint64_t j;
+    if (work[i] <= max_size) {
+#pragma omp atomic capture
+      j = ++cnt;
+      work[i] = j;
+    } else
+      work[i] = 0;
+  }
+
+#pragma omp parallel for
+  for (i = 0; i < n; i++)
+    input[i] = work[input[i]];
+
+  return cnt;
+}
+
 uint64_t remove_small_objects(uint64_t n, int64_t *input, uint64_t min_size,
                               int64_t *work) {
   int Verbose;

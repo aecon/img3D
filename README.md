@@ -2,7 +2,7 @@
 
 img3 is a python package for image processing of large, 3D (volumetric) image data.
 
-img3 is intended for
+img3 is intended for:
 * storing NumPy arrays in raw file format
 * storing and reading image metadata from corresponding nrrd files, used in bio-imaging
 * perform copmutations on image data
@@ -13,7 +13,6 @@ img3 is intended for
 The img3D package is organized as follows:
 * [src](src/)      : Source (C and Python) files.
 * [examples](examples/) : Examples of simple use cases of the package.
-* [pipelines](pipelines/) : Examples of complete pipelines for segmentation and object detection.
 
 
 
@@ -48,6 +47,6 @@ make install PY=python CC=clang CFLAGS_OPENMP= 'CFLAGS = -O2 -g'
 
 The package was developed in the labs of Prof. Petros Koumoutsakos (ETH Zurich) and Prof. Adriano Aguzzi (University of Zurich) by
 * Sergey Litvinov (lisergey@ethz.ch)
-* Athena Economides (athena.eco@gmail.com)
+* Athena Economides (athena.economides@uzh.ch)
 
 Data acquisition was performed by Francesca Catto.

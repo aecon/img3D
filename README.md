@@ -1,5 +1,11 @@
 # img3D
-Image Processing package for large, 3D (volumetric) image data
+
+img3 is a python package, for image processing of large, 3D (volumetric) image data.
+
+img3 is intended for
+* storing NumPy arrays in raw file format
+* storing and reading image metadata from corresponding nrrd files, used in bio-imaging
+* perform copmutations on image data
 
 
 ## Code Structure

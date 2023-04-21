@@ -299,7 +299,7 @@ def remove_large_objects(input, max_size, work):
     assert input.size == work.size
     path = os.path.dirname(os.path.realpath(__file__))
     lib = numpy.ctypeslib.load_library('img30.so', path)
-    fun = lib.remove_small_objects
+    fun = lib.remove_large_objects
     fun.restype = ctypes.c_ulong
     fun.argtypes = [
         ctypes.c_ulong,

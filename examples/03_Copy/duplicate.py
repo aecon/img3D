@@ -1,23 +1,14 @@
 ###################################################
 # File Name     : copy.py
 # Creation Date : 19-04-2023
-# Last Modified : Thu 20 Apr 2023 10:18:20 AM UTC
+# Last Modified : Mon 24 Apr 2023 10:01:29 AM UTC
 # Author        : Athena Economides
 # Email         : athena.economides@uzh.ch
 ###################################################
 
 
 import img3
-import numba
-
-
-@numba.njit(parallel=True)
-def copy_array(inp, out):
-    nx, ny, nz = inp.shape
-    for k in numba.prange(nz):
-        for j in numba.prange(ny):
-            for i in numba.prange(nx):
-                out[i, j, k] = inp[i, j, k]
+import numpy as np
 
 
 if __name__ == "__main__":
@@ -35,5 +26,5 @@ if __name__ == "__main__":
     img3.nrrd_write("example3.nrrd", "example3.raw", output_raw.dtype, output_raw.shape, spacings)
 
     # Copy data from input_raw to output_raw
-    copy_array(input_raw, output_raw)
+    np.copyto(output_raw, input_raw, casting='no')
 

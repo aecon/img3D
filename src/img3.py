@@ -186,6 +186,12 @@ def read_input(nrrd_path, path, dtype, offset, shape):
     return a0
 
 
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Processing
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 def tif2raw(input_path, output_path, nrrd_path, Verbose=False):
     me = "img3 (tif2raw)"
     msg = "%s arguments: (input.tif, output.raw, output.nrrd, [Verbose])\n" % me
@@ -212,12 +218,6 @@ def tif2raw(input_path, output_path, nrrd_path, Verbose=False):
         numpy.copyto(output[:, :, k], a, 'no')
     nrrd_write(nrrd_path, output_path, dtype, shape, (1, 1, 1))
 
-
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Processing
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 def memset(input, value):
     path = os.path.dirname(os.path.realpath(__file__))

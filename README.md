@@ -72,6 +72,6 @@ The pipeline will be published together with the corresponding publication.
 ## Authors
 
 The package was developed in the labs of Prof. Petros Koumoutsakos (ETH Zurich) and Prof. Adriano Aguzzi (University of Zurich) by
-* Sergey Litvinov (lisergey@ethz.ch)
-* Athena Economides (athena.economides@uzh.ch)
-* by Francesca Catto
+* Sergey Litvinov
+* Athena Economides
+* Francesca Catto

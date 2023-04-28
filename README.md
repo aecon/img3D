@@ -45,6 +45,11 @@ make install PY=python CC=clang CFLAGS_OPENMP= 'CFLAGS = -O2 -g'
 
 ## Applications
 
+Below are results from projects where [img3D](https://github.com/aecon/img3D) modules were used.
+A project-specific pipeline was developed to process and generate the quantification needed for each project.
+The rendering of the generated 3D segmentations was performed with [Paraview](https://www.paraview.org).
+
+
 ### Project 1: Image processing for the quantification of drug efficacy
 
 A study for the efficacy of different drugs in neurodegenerative diseases.

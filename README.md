@@ -43,11 +43,25 @@ make install PY=python CC=clang CFLAGS_OPENMP= 'CFLAGS = -O2 -g'
 ```
 
 
-## Results
+## Applications
 
+### Project 1: Image processing for the quantification of drug efficacy
+
+A study for the efficacy of different drugs in neurodegenerative diseases.
+A novel image processing pipeline utilizing [img3D](https://github.com/aecon/img3D) modules was developed to quantify drug efficacy on the sub-cellular level, through object segmentation of stained neural cells in 3D whole mouse-brain scans.
+The pipeline will be published together with the corresponding publication.
 
 <IMG SRC="graphics/plaque_3d_projections.jpg" ALIGN="center"/>
 
+
+### Project 2: Quantification of drug bio-distribution through 3D image processing
+
+An international collaboration aiming to develop a new protein-based delivery system to the central nervous system of the brain.
+3D images of whole mouse-brain scans were used to detect the bio-distribution of the delivery system, using light-sheet microscopy.
+Image processing was performed using a custom pipeline utilizing [img3D](https://github.com/aecon/img3D) modules.
+The pipeline will be published together with the corresponding publication.
+
+<IMG SRC="graphics/brains3D.jpg" ALIGN="center"/>
 
 
 ## Authors

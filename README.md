@@ -43,6 +43,13 @@ make install PY=python CC=clang CFLAGS_OPENMP= 'CFLAGS = -O2 -g'
 ```
 
 
+## Results
+
+
+<IMG SRC="graphics/plaque_3d_projections.jpg" ALIGN="center"/>
+
+
+
 ## Authors
 
 The package was developed in the labs of Prof. Petros Koumoutsakos (ETH Zurich) and Prof. Adriano Aguzzi (University of Zurich) by

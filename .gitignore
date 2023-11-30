@@ -2,3 +2,4 @@
 *.tif
 *.raw
 *.nrrd
+*__pycache__
